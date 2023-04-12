@@ -1,0 +1,26 @@
+name: Lint GO Code
+
+on: 
+  push:
+    branches:
+      - main
+
+jobs:
+  lint:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Set up go 
+        uses: actions/setup-go@v2
+
+        with:
+          go-version: latest
+
+      - name: Lint
+        run: |
+         curl -sSfL https://raw.githubusercontent.com/golangci/golangci-lint/master/install.sh 
+         | sh -s -- -b $(go env GOPATH)/bin v1.52.2
+
+         golanci-lint run
